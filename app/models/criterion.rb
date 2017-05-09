@@ -163,13 +163,22 @@ class Criterion < ActiveRecord::Base
   end
 
   def create_marks
-    # result with specific assignment
+    byebug
     results = Result
                 .joins(submission: :grouping)
                 .where(groupings: {assignment_id: self.assignment_id})
+    i = 0
     results.each do |r|
+      i += 1
       mark = self.marks.create(result_id: id)
       r.update_total_mark
     end
+    puts "YOU WENT THROUGH THE LOOP THIS MANY TIMES: #{i}"
+    j = 0
+    self.marks.each do |mark|
+      j += 1
+      puts "MARK MARK MARK MARK: #{mark.markable_id}"
+    end
+    puts "YOU WENT THROUGH THE LOOP THIS MANY TIMES: #{j}"
   end
 end
