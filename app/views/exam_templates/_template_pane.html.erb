@@ -1,14 +1,13 @@
 <div class='sortable'>
   <header>
     <span class='left'><%= ExamTemplate.human_attribute_name('filename') %></span>
-    <span class='center'><%= ExamTemplate.human_attribute_name('num_pages') %></span>
-    <span class='right'><%= 'download' %></span>
+    <span class='right'><%= ExamTemplate.human_attribute_name('num_pages') %></span>
   </header>
 
-  <ul id='criteria_pane_list'>
+  <ul>
     <% exam_templates.each do |exam_template| %>
         <%= render partial: 'exam_template_column',
-                   locals: { criterion: exam_template } %>
+                   locals: { exam_template: exam_template } %>
     <% end %>
   </ul>
 </div>
