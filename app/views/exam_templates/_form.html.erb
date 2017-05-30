@@ -1,13 +1,11 @@
-<% exam_templates.each do |exam_template| %>
-  <%= form_for [@assignment, exam_template],
-               html: { multipart: true } do |f| %>
-      <%= f.error_messages%>
-      <fieldset>
-        <legend><%= t('exam_templates.update.general') %></legend>
-        <p><%= raw t('assignment.required_fields') %> <span class='required_field'>*</span></p>
-        <%= f.label t('exam_templates.update.instruction') %>
-        <%= f.file_field :new_template %>
-        <p><%= submit_tag t(:submit)%></p>
-      </fieldset>
-  <% end %>
+<%= form_for [@assignment, exam_template],
+             html: { multipart: true } do |f| %>
+  <%= f.error_messages%>
+  <fieldset>
+    <legend><%= t('exam_templates.update.general') %></legend>
+    <p><%= raw t('assignment.required_fields') %> <span class='required_field'>*</span></p>
+    <%= f.label t('exam_templates.update.instruction') %>
+    <%= f.file_field :new_template %>
+    <p><%= submit_tag t(:submit)%></p>
+  </fieldset>
 <% end %>
