@@ -1,8 +1,17 @@
 <% content_for :title, ExamTemplate.model_name.human.pluralize %>
 
-<div>
-  <%= render partial: 'template_pane',
-             locals: { exam_templates: @exam_templates }%>
+<div class='pane_wrapper'>
+  <div id='criteria_pane'>
+    <%= render partial: 'template_pane',
+               locals: { exam_templates: @exam_templates } %>
+  </div>
+
+  <div id='editing_pane'>
+    <div id='editing_pane_menu'>
+      <%= render partial: 'manage_template' %>
+      <div id='criteria_pane_list'></div>
+    </div>
+  </div>
 </div>
 
 <%= render partial: 'form',
