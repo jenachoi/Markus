@@ -1,4 +1,12 @@
 <% content_for :title, ExamTemplate.model_name.human.pluralize %>
 
+<div class='pane_wrapper'>
+  <div id='criteria_pane'>
+    <%= render partial: 'template_pane',
+               locals: { exam_templates: @exam_templates }%>
+  </div>
+
+</div>
+
 <%= render partial: 'form',
            locals: { exam_templates: @exam_templates }%>
