@@ -14,7 +14,6 @@ class ExamTemplatesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        @assignment = Assignment.find(params[:assignment_id])
         render json: get_template_divisions_table_info
       end
     end
