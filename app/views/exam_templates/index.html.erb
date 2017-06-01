@@ -1,9 +1,7 @@
 <% content_for :head do %>
-  <script>
-    <%= render partial: 'template_divisions_table.js.jsx.erb',
+    <%= render partial: 'template_divisions_table',
                formats: [:'js.jsx'],
                handlers: [:erb] %>
-  </script>
 <% end %>
 
 <% content_for :title, ExamTemplate.model_name.human.pluralize %>
