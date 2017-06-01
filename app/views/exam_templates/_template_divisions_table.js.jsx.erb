@@ -12,19 +12,16 @@
             id: 'label',
             content: '<%= j raw 'Label' %>',
             sortable: true,
-            searchable: true
           },
           {
             id: 'start',
             content: '<%= j raw 'Start' %>',
             sortable: true,
-            searchable: true
           },
           {
             id: 'end',
             content: '<%= j raw 'End' %>',
             sortable: true,
-            searchable: true
           }
         ]
       };
@@ -49,9 +46,9 @@
         method: 'GET',
         dataType: 'json',
         success: function(data) {
-        this.setState({
-          divisions: data,
-        });
+          this.setState({
+            divisions: data,
+          });
       }.bind(this),
         complete: function() {
           document.getElementById('working').style.display = 'none';
