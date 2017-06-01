@@ -1,4 +1,6 @@
 class ExamTemplatesController < ApplicationController
+  include ExamTemplatesHelper
+
   # responders setup
   responders :flash, :http_cache
   respond_to :html
