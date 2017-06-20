@@ -1,0 +1,14 @@
+<% content_for :title, @assignment.short_identifier + ' SplitPDFLogs' %>
+
+<% @heading_buttons = [
+  { link_text: 'Back to Exam Template page',
+    link_path: assignment_exam_templates_path }
+] %>
+
+<% i = 1 %>
+<% @split_pdf_logs.each do |split_pdf_log| %>
+  <%= render partial: 'split_pdf_log',
+             locals: { split_pdf_log: split_pdf_log,
+                       i: i } %>
+  <% i += 1 %>
+<% end %>
