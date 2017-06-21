@@ -1,0 +1,18 @@
+<div>
+  <% current_incomplete_num_groups = split_pdf_log.num_groups_in_incomplete %>
+  <% if current_incomplete_num_groups == previous_incomplete_num_groups && split_pdf_log.num_pages_qr_scan_error == 0 %>
+    <p class="log-green-message">
+      <%= "Log ##{i}" %> - <%= split_pdf_log.uploaded_when.strftime("%d %b %y at %I:%M:%S %p") %>
+    </p>
+    <p>Exam Template is successfully split. <strong><%= split_pdf_log.filename %></strong> is split into <strong><%= split_pdf_log.original_num_pages %></strong> pages.</p>
+  <% else %>
+    <p class="log-red-message">
+      <%= "Log ##{i}" %> - <%= split_pdf_log.uploaded_when.strftime("%d %b %y at %I:%M:%S %p") %>
+    </p>
+    <% if split_pdf_log.num_pages_qr_scan_error > 0 %>
+        <p>Exam Template is not successfully split. While <strong><%= split_pdf_log.filename %></strong> is made up of <strong><%= split_pdf_log.original_num_pages %></strong> pages, there are <strong><%= split_pdf_log.num_pages_qr_scan_error %></strong> pages with QR scan errors.</p>
+    <% else %>
+        <p>Exam Template is not successfully split. While there are <strong><%= split_pdf_log.num_pages_qr_scan_error %></strong> QR scan errors with <strong><%= split_pdf_log.filename %></strong>, there might be missing pages.</p>
+    <% end %>
+  <% end %>
+</div>
