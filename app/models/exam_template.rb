@@ -136,9 +136,11 @@ class ExamTemplate < ActiveRecord::Base
         self.template_divisions.each do |template_division|
           submission_file = CombinePDF.new
           (template_division.start..template_division.end).each do |i|
-            path = File.join(incomplete_dir, "#{i}.pdf")
-            pdf = CombinePDF.load path
-            submission_file << pdf.pages[0]
+            if File.exists? File.join(incomplete_dir, "#{i}.pdf")
+              path = File.join(incomplete_dir, "#{i}.pdf")
+              pdf = CombinePDF.load path
+              submission_file << pdf.pages[0]
+            end
           end
           txn.replace(File.join(assignment_folder, "#{template_division.label}.pdf"), submission_file.to_pdf,
                       'application/pdf', revision.revision_identifier)
@@ -167,7 +169,7 @@ class ExamTemplate < ActiveRecord::Base
           unless grouping.error_collecting
             grouping.is_collected = true
           end
-          grouping.save
+          grouping.save!
         end
       end
     end
