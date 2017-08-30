@@ -205,23 +205,22 @@ describe Student do
 
     it 'hide students and have the repo remove them' do
       # Mocks to enter into the if
-      Assignment.any_instance.stubs(:vcs_submit).returns(true)
-      Grouping.any_instance.stubs(:is_valid?).returns(true)
+      allow(Assignment).to receive(:vcs_submit).and_return(true)
+      allow(Grouping).to receive(:is_valid?).and_return(true)
 
       # Mock the repository and expect :remove_user with the student's user_name
-      mock_repo = mock('Repository::AbstractRepository')
-      mock_repo.stubs(:remove_user).returns(true)
-      mock_repo.stubs(:close).returns(true)
-      mock_repo.expects(:remove_user).with(any_of(@student1.user_name, @student2.user_name)).at_least(2)
-      Group.any_instance.stubs(:repo).returns(mock_repo)
+      allow_any_instance_of('Repository::AbstractRepository').to receive(:remove_user).and_return(true)
+      allow_any_instance_of('Repository::AbstractRepository').to receive(:close).and_return(true)
+      allow_any_instance_of('Repository::AbstractRepository').to receive(:remove_user).with(@student1.user_name, @student2.user_name).at_least(2).times
+      allow(Group).to receive(:repo).and_return(mock_repo)
 
       Student.hide_students(@student_id_list)
     end
 
     it 'not error when user is not found on hide and remove' do
       # Mocks to enter into the if that leads to the call to remove the student
-      Assignment.any_instance.stubs(:vcs_submit).returns(true)
-      Grouping.any_instance.stubs(:is_valid?).returns(true)
+      allow(Assignment).to receive(:vcs_submit).and_return(true)
+      allow(Grouping).to receive(:is_valid?).and_return(true)
 
       # Mock the repository and raise Repository::UserNotFound
       mock_repo = mock('Repository::AbstractRepository')
@@ -271,8 +270,8 @@ describe Student do
 
     it 'unhide without error when users already exists in repo' do
       # Mocks to enter into the if
-      Assignment.any_instance.stubs(:vcs_submit).returns(true)
-      Grouping.any_instance.stubs(:is_valid?).returns(true)
+      allow(Assignment).to receive(:vcs_submit).and_return(true)
+      allow(Grouping).to receive(:is_valid?).and_return(true)
 
       # Mock the repository and raise Repository::UserNotFound
       mock_repo = mock('Repository::AbstractRepository')
@@ -324,8 +323,8 @@ describe Student do
         expect(pending_memberships.length).to eq 0
       end
 
-      it 'return nil when there are no pending groupings' do
-        Student.any_instance.stubs(:pending_groupings_for).returns(nil)
+      it 'return empty when there are no pending groupings' do
+        allow(Student).to receive(:pending_groupings_for).and_return(nil)
         pending_memberships = @student.pending_memberships_for(@assignment.id)
         expect(pending_memberships).to be_nil
       end
@@ -352,7 +351,7 @@ describe Student do
       it 'can be invited to a grouping' do
         grouping = create(:grouping)
         #Test that grouping.update_repository_permissions is called at least once
-        Grouping.any_instance.expects(:update_repository_permissions).at_least(1)
+        allow(Grouping).to receive(:update_repository_permissions).at_least(:once)
 
         @student.invite(grouping.id)
 
@@ -404,7 +403,7 @@ describe Student do
           grouping = @membership.grouping
           membership2 = create(:student_membership, membership_status: StudentMembership::STATUSES[:pending], grouping: create(:grouping, assignment: @assignment), user: @student)
 
-          Grouping.any_instance.expects(:update_repository_permissions).at_least(1)
+          allow(Grouping).to receive(:update_repository_permissions).at_least(:once)
 
           expect(@student.join(grouping.id)).to be_truthy
 
